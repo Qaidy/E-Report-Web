@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDN E-Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="shortcut icon" href="src/nobg.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a0a0a;
+      --accent: #10b981;
+      --text: #1a1a1a;
+      --text-muted: #737373;
+      --bg: #ffffff;
+      --bg-alt: #fafafa;
+      --border: #e5e5e5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary) !important;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link {
+      color: var(--text-muted) !important;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem !important;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary) !important;
+    }
+
+    /* Hero Section */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 4rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .accent-text {
+      color: var(--accent);
+      position: relative;
+    }
+
+    .btn-hero {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      background: var(--text);
+    }
+
+    .hero-image {
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Section Styling */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    /* About Section */
+    #about {
+      background: var(--bg-alt);
+    }
+
+    .about-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .about-content {
+      padding: 2rem 0;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      border-color: transparent;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    .service-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .service-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Vision Mission */
+    .vm-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .vm-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      border-color: var(--accent);
+    }
+
+    .vm-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .vm-text {
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .vm-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .vm-card li {
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+
+    .vm-card li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+    }
+
+    .footer-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-copyright {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 0;
+      }
+
+      #home {
+        padding: 6rem 0 2rem;
+      }
+
+      .hero-title {
+        margin-bottom: 1rem;
+      }
+
+      .hero-subtitle {
+        margin-bottom: 2rem;
+      }
+
+      .btn-hero {
+        padding: 0.875rem 2rem;
+        width: 100%;
+      }
+
+      .service-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .vm-card {
+        padding: 2rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .footer-links a {
+        margin: 0.25rem 0;
+      }
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-alt);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="src/idn.png" alt="Logo" width="32" height="32" class="me-2 rounded-circle">
+        <span>IDN E-Report</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#layanan">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#visi-misi">Vision</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6" data-aos="fade-up">
+          <h1 class="hero-title">
+            Platform Pengaduan<br>
+            <span class="accent-text">Modern & Efektif</span>
+          </h1>
+          <p class="hero-subtitle">
+            IDN E-Report memudahkan siswa menyampaikan aspirasi dan melaporkan permasalahan di sekolah secara transparan dan real-time.
+          </p>
+          <a href="index.html" class="btn btn-hero">Buka Dashboard</a>
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <img src="src/ilustrasi.png" alt="Illustration" class="img-fluid hero-image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="about-image">
+            <img src="src/team.jpg" alt="About Us" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-lg-7" data-aos="fade-left">
+          <div class="about-content">
+            <h2 class="section-title">Tentang Kami</h2>
+            <p class="about-text">
+              IDN E-Report adalah platform pengaduan digital yang dirancang khusus untuk menciptakan komunikasi yang lebih baik antara siswa dan pihak sekolah.
+            </p>
+            <p class="about-text">
+              Kami berkomitmen untuk memberikan layanan yang cepat, aman, dan terpercaya dalam menangani setiap laporan yang masuk.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="layanan">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <h2 class="section-title">Layanan Kami</h2>
+        <p class="section-subtitle">
+          Berbagai kategori pengaduan yang dapat Anda sampaikan melalui platform kami
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+          <div class="service-card text-center">
+            <i class="bi bi-building-gear service-icon"></i>
+            <h5 class="service-title">Fasilitas Sekolah</h5>
+            <p class="service-text">Laporkan fasilitas yang rusak untuk segera diperbaiki</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-card text-center">
+            <i class="bi bi-calendar-check service-icon"></i>
+            <h5 class="service-title">Program & Kegiatan</h5>
+            <p class="service-text">Sampaikan saran tentang kegiatan sekolah</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card text-center">
+            <i class="bi bi-shield-check service-icon"></i>
+            <h5 class="service-title">Keamanan</h5>
+            <p class="service-text">Laporkan hal yang mengganggu keamanan sekolah</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-card text-center">
+            <i class="bi bi-graph-up service-icon"></i>
+            <h5 class="service-title">Pantau Laporan</h5>
+            <p class="service-text">Pantau perkembangan laporan secara real-time</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Mission -->
+  <section id="visi-misi">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <h2 class="section-title">Visi & Misi</h2>
+        <p class="section-subtitle">
+          Tujuan dan arah pengembangan platform IDN E-Report
+        </p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-5" data-aos="fade-up" data-aos-delay="0">
+          <div class="vm-card">
+            <h5 class="vm-title">Visi</h5>
+            <p class="vm-text">
+              Menjadi platform pengaduan digital terpercaya yang meningkatkan kualitas komunikasi antara siswa dan sekolah secara transparan dan inovatif.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-5" data-aos="fade-up" data-aos-delay="200">
+          <div class="vm-card">
+            <h5 class="vm-title">Misi</h5>
+            <ul class="vm-text">
+              <li>Menyediakan sarana pelaporan yang mudah digunakan</li>
+              <li>Meningkatkan respon dan transparansi sekolah</li>
+              <li>Mendukung budaya komunikasi yang terbuka</li>
+              <li>Mendorong inovasi teknologi pendidikan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <div class="footer-title">IDN E-Report</div>
+      <p class="footer-text">
+        Platform pengaduan digital untuk menyampaikan aspirasi dan laporan dengan aman dan transparan
+      </p>
+      <div class="footer-links d-flex justify-content-center flex-wrap">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#layanan">Services</a>
+        <a href="#visi-misi">Vision</a>
+      </div>
+      <div class="footer-copyright">
+        © 2025 IDN E-Report. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 50
+    });
+
+    // Active nav link on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
